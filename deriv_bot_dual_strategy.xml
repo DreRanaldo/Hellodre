@@ -1,0 +1,1154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml xmlns="https://developers.google.com/blockly/xml" is_dbot="true" collection="false">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TRADE DEFINITION — Volatility 1s Index, Rise/Fall, 5 ticks
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="trade_definition" id="trade_def_main" deletable="false" x="0" y="60">
+    <statement name="TRADE_OPTIONS">
+      <block type="trade_definition_market" id="market_block" deletable="false" movable="false">
+        <field name="MARKET_LIST">synthetic_index</field>
+        <field name="SUBMARKET_LIST">random_index</field>
+        <field name="SYMBOL_LIST">1HZ10V</field>
+        <next>
+          <block type="trade_definition_tradetype" id="tradetype_block" deletable="false" movable="false">
+            <field name="TRADETYPECAT_LIST">callput</field>
+            <field name="TRADETYPE_LIST">callput</field>
+            <next>
+              <block type="trade_definition_contracttype" id="contracttype_block" deletable="false" movable="false">
+                <field name="TYPE_LIST">both</field>
+                <next>
+                  <block type="trade_definition_candleinterval" id="candleinterval_block" deletable="false" movable="false">
+                    <field name="CANDLEINTERVAL_LIST">60</field>
+                    <next>
+                      <block type="trade_definition_restartbuysell" id="restartbuysell_block" deletable="false" movable="false">
+                        <field name="TIME_MACHINE_ENABLED">FALSE</field>
+                        <next>
+                          <block type="trade_definition_restartonerror" id="restartonerror_block" deletable="false" movable="false">
+                            <field name="RESTARTONERROR">TRUE</field>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="SUBMARKET">
+      <block type="trade_definition_tradeoptions" id="tradeoptions_block">
+        <mutation xmlns="http://www.w3.org/1999/xhtml" has_first_barrier="false" has_second_barrier="false" has_prediction="false"></mutation>
+        <field name="DURATIONTYPE_LIST">t</field>
+        <value name="DURATION">
+          <shadow type="math_number_positive" id="duration_shadow">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
+        <value name="AMOUNT">
+          <shadow type="math_number_positive" id="amount_shadow">
+            <field name="NUM">1</field>
+          </shadow>
+          <block type="variables_get" id="stake_getter">
+            <field name="VAR">current_stake</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STRATEGY 1 PROCEDURE — Donchian + PSAR + Stochastic
+       Sets trade_direction to CALL, PUT, or NONE
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="procedures_defnoreturn" id="proc_strategy1" x="900" y="60">
+    <field name="NAME">run_strategy_1</field>
+    <comment pinned="false" h="60" w="220">Strategy 1: Indicator Confluence (Donchian + PSAR + Stochastic)</comment>
+    <statement name="STACK">
+
+      <!-- ── Get 20 candles for Donchian Channel ── -->
+      <block type="variables_set" id="s1_set_candles">
+        <field name="VAR">candles_20</field>
+        <value name="VALUE">
+          <block type="ohlc_candles" id="s1_get_candles">
+            <field name="CANDLECOUNT">20</field>
+          </block>
+        </value>
+        <next>
+
+          <!-- ── Extract close price list ── -->
+          <block type="variables_set" id="s1_set_close_list">
+            <field name="VAR">close_list</field>
+            <value name="VALUE">
+              <block type="ohlcclose_list" id="s1_close_list">
+                <value name="OHLCOBJ">
+                  <block type="variables_get" id="s1_candles_ref1">
+                    <field name="VAR">candles_20</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+
+              <!-- ── Donchian Upper = MAX of close list ── -->
+              <block type="variables_set" id="s1_set_dc_upper">
+                <field name="VAR">dc_upper</field>
+                <value name="VALUE">
+                  <block type="math_list_stat" id="s1_dc_upper_stat">
+                    <field name="STAT">MAX</field>
+                    <value name="INPUT">
+                      <block type="variables_get" id="s1_close_list_upper">
+                        <field name="VAR">close_list</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+
+                  <!-- ── Donchian Lower = MIN of close list ── -->
+                  <block type="variables_set" id="s1_set_dc_lower">
+                    <field name="VAR">dc_lower</field>
+                    <value name="VALUE">
+                      <block type="math_list_stat" id="s1_dc_lower_stat">
+                        <field name="STAT">MIN</field>
+                        <value name="INPUT">
+                          <block type="variables_get" id="s1_close_list_lower">
+                            <field name="VAR">close_list</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+
+                      <!-- ── Donchian Mid = (upper + lower) / 2 ── -->
+                      <block type="variables_set" id="s1_set_dc_mid">
+                        <field name="VAR">dc_mid</field>
+                        <value name="VALUE">
+                          <block type="math_arithmetic" id="s1_dc_mid_div">
+                            <field name="OP">DIVIDE</field>
+                            <value name="A">
+                              <block type="math_arithmetic" id="s1_dc_mid_add">
+                                <field name="OP">ADD</field>
+                                <value name="A">
+                                  <block type="variables_get" id="s1_dc_upper_ref">
+                                    <field name="VAR">dc_upper</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="variables_get" id="s1_dc_lower_ref">
+                                    <field name="VAR">dc_lower</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="s1_two">
+                                <field name="NUM">2</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+
+                          <!-- ── Current close = last item in close list ── -->
+                          <block type="variables_set" id="s1_set_current_close">
+                            <field name="VAR">current_close</field>
+                            <value name="VALUE">
+                              <block type="list_get_nth" id="s1_get_last_close">
+                                <field name="WHERE">LAST</field>
+                                <value name="INPUT">
+                                  <block type="variables_get" id="s1_close_list_current">
+                                    <field name="VAR">close_list</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+
+                              <!-- ── dc_bullish: close > mid ── -->
+                              <block type="variables_set" id="s1_set_dc_bull">
+                                <field name="VAR">dc_bullish</field>
+                                <value name="VALUE">
+                                  <block type="logic_compare" id="s1_dc_bull_compare">
+                                    <field name="OP">GT</field>
+                                    <value name="A">
+                                      <block type="variables_get" id="s1_close_vs_mid">
+                                        <field name="VAR">current_close</field>
+                                      </block>
+                                    </value>
+                                    <value name="B">
+                                      <block type="variables_get" id="s1_dc_mid_ref">
+                                        <field name="VAR">dc_mid</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+
+                                  <!-- ── PSAR value ── -->
+                                  <block type="variables_set" id="s1_set_psar">
+                                    <field name="VAR">psar_value</field>
+                                    <value name="VALUE">
+                                      <block type="psar" id="s1_psar_block">
+                                        <field name="STEP">0.02</field>
+                                        <field name="MAXIMUM">0.2</field>
+                                      </block>
+                                    </value>
+                                    <next>
+
+                                      <!-- ── psar_bullish: close > psar (dots below price) ── -->
+                                      <block type="variables_set" id="s1_set_psar_bull">
+                                        <field name="VAR">psar_bullish</field>
+                                        <value name="VALUE">
+                                          <block type="logic_compare" id="s1_psar_bull_compare">
+                                            <field name="OP">GT</field>
+                                            <value name="A">
+                                              <block type="variables_get" id="s1_close_vs_psar">
+                                                <field name="VAR">current_close</field>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="variables_get" id="s1_psar_ref">
+                                                <field name="VAR">psar_value</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <next>
+
+                                          <!-- ── Stochastic %K ── -->
+                                          <block type="variables_set" id="s1_set_stoch_k">
+                                            <field name="VAR">stoch_k</field>
+                                            <value name="VALUE">
+                                              <block type="stochastic" id="s1_stoch_k_block">
+                                                <field name="PERIOD">14</field>
+                                                <field name="SMOOTH_K">3</field>
+                                                <field name="SMOOTH_D">3</field>
+                                                <field name="RESULT">K</field>
+                                              </block>
+                                            </value>
+                                            <next>
+
+                                              <!-- ── Stochastic %D ── -->
+                                              <block type="variables_set" id="s1_set_stoch_d">
+                                                <field name="VAR">stoch_d</field>
+                                                <value name="VALUE">
+                                                  <block type="stochastic" id="s1_stoch_d_block">
+                                                    <field name="PERIOD">14</field>
+                                                    <field name="SMOOTH_K">3</field>
+                                                    <field name="SMOOTH_D">3</field>
+                                                    <field name="RESULT">D</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+
+                                                  <!-- ── stoch_bullish: K > D AND K < 20 ── -->
+                                                  <block type="variables_set" id="s1_set_stoch_bull">
+                                                    <field name="VAR">stoch_bullish</field>
+                                                    <value name="VALUE">
+                                                      <block type="logic_operation" id="s1_stoch_bull_and">
+                                                        <field name="OP">AND</field>
+                                                        <value name="A">
+                                                          <block type="logic_compare" id="s1_k_gt_d">
+                                                            <field name="OP">GT</field>
+                                                            <value name="A">
+                                                              <block type="variables_get" id="s1_stoch_k_ref1">
+                                                                <field name="VAR">stoch_k</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="B">
+                                                              <block type="variables_get" id="s1_stoch_d_ref1">
+                                                                <field name="VAR">stoch_d</field>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                        <value name="B">
+                                                          <block type="logic_compare" id="s1_k_lt_20">
+                                                            <field name="OP">LT</field>
+                                                            <value name="A">
+                                                              <block type="variables_get" id="s1_stoch_k_ref2">
+                                                                <field name="VAR">stoch_k</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="B">
+                                                              <block type="math_number" id="s1_twenty">
+                                                                <field name="NUM">20</field>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+
+                                                      <!-- ── stoch_bearish: K < D AND K > 80 ── -->
+                                                      <block type="variables_set" id="s1_set_stoch_bear">
+                                                        <field name="VAR">stoch_bearish</field>
+                                                        <value name="VALUE">
+                                                          <block type="logic_operation" id="s1_stoch_bear_and">
+                                                            <field name="OP">AND</field>
+                                                            <value name="A">
+                                                              <block type="logic_compare" id="s1_k_lt_d">
+                                                                <field name="OP">LT</field>
+                                                                <value name="A">
+                                                                  <block type="variables_get" id="s1_stoch_k_ref3">
+                                                                    <field name="VAR">stoch_k</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="variables_get" id="s1_stoch_d_ref2">
+                                                                    <field name="VAR">stoch_d</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                            <value name="B">
+                                                              <block type="logic_compare" id="s1_k_gt_80">
+                                                                <field name="OP">GT</field>
+                                                                <value name="A">
+                                                                  <block type="variables_get" id="s1_stoch_k_ref4">
+                                                                    <field name="VAR">stoch_k</field>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="math_number" id="s1_eighty">
+                                                                    <field name="NUM">80</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+
+                                                          <!-- ── Decision: ALL BULLISH → CALL; ALL BEARISH → PUT; else NONE ── -->
+                                                          <block type="controls_if" id="s1_confluence_check">
+                                                            <mutation elseif="1" else="1"></mutation>
+                                                            <value name="IF0">
+                                                              <!-- dc_bullish AND psar_bullish AND stoch_bullish -->
+                                                              <block type="logic_operation" id="s1_all_bull">
+                                                                <field name="OP">AND</field>
+                                                                <value name="A">
+                                                                  <block type="logic_operation" id="s1_dc_psar_bull">
+                                                                    <field name="OP">AND</field>
+                                                                    <value name="A">
+                                                                      <block type="variables_get" id="s1_dc_bull_ref">
+                                                                        <field name="VAR">dc_bullish</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="B">
+                                                                      <block type="variables_get" id="s1_psar_bull_ref">
+                                                                        <field name="VAR">psar_bullish</field>
+                                                                      </block>
+                                                                    </value>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="variables_get" id="s1_stoch_bull_ref">
+                                                                    <field name="VAR">stoch_bullish</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                            <statement name="DO0">
+                                                              <block type="variables_set" id="s1_set_call">
+                                                                <field name="VAR">trade_direction</field>
+                                                                <value name="VALUE">
+                                                                  <block type="text" id="s1_call_text">
+                                                                    <field name="TEXT">CALL</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </statement>
+                                                            <value name="IF1">
+                                                              <!-- NOT dc_bullish AND NOT psar_bullish AND stoch_bearish -->
+                                                              <block type="logic_operation" id="s1_all_bear">
+                                                                <field name="OP">AND</field>
+                                                                <value name="A">
+                                                                  <block type="logic_operation" id="s1_dc_psar_bear">
+                                                                    <field name="OP">AND</field>
+                                                                    <value name="A">
+                                                                      <block type="logic_negate" id="s1_negate_dc">
+                                                                        <value name="BOOL">
+                                                                          <block type="variables_get" id="s1_dc_bull_neg">
+                                                                            <field name="VAR">dc_bullish</field>
+                                                                          </block>
+                                                                        </value>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="B">
+                                                                      <block type="logic_negate" id="s1_negate_psar">
+                                                                        <value name="BOOL">
+                                                                          <block type="variables_get" id="s1_psar_bull_neg">
+                                                                            <field name="VAR">psar_bullish</field>
+                                                                          </block>
+                                                                        </value>
+                                                                      </block>
+                                                                    </value>
+                                                                  </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="variables_get" id="s1_stoch_bear_ref">
+                                                                    <field name="VAR">stoch_bearish</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                            <statement name="DO1">
+                                                              <block type="variables_set" id="s1_set_put">
+                                                                <field name="VAR">trade_direction</field>
+                                                                <value name="VALUE">
+                                                                  <block type="text" id="s1_put_text">
+                                                                    <field name="TEXT">PUT</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </statement>
+                                                            <statement name="ELSE">
+                                                              <!-- No confluence — leave as NONE -->
+                                                              <block type="variables_set" id="s1_set_none">
+                                                                <field name="VAR">trade_direction</field>
+                                                                <value name="VALUE">
+                                                                  <block type="text" id="s1_none_text">
+                                                                    <field name="TEXT">NONE</field>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </statement>
+                                                          </block>
+
+                                                        </next>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STRATEGY 2 PROCEDURE — Momentum Candle Detection
+       Sets trade_direction to CALL, PUT, or NONE
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="procedures_defnoreturn" id="proc_strategy2" x="900" y="1400">
+    <field name="NAME">run_strategy_2</field>
+    <comment pinned="false" h="60" w="220">Strategy 2: Momentum Candle — body>=3 pips, ratio>=0.6, lookback 3 candles</comment>
+    <statement name="STACK">
+
+      <!-- ── Get last 3 candles ── -->
+      <block type="variables_set" id="s2_set_candles">
+        <field name="VAR">candles_3</field>
+        <value name="VALUE">
+          <block type="ohlc_candles" id="s2_get_candles">
+            <field name="CANDLECOUNT">3</field>
+          </block>
+        </value>
+        <next>
+
+          <!-- ── Get most recent candle ── -->
+          <block type="variables_set" id="s2_set_last_candle">
+            <field name="VAR">last_candle</field>
+            <value name="VALUE">
+              <block type="list_get_nth" id="s2_get_last_candle">
+                <field name="WHERE">LAST</field>
+                <value name="INPUT">
+                  <block type="variables_get" id="s2_candles_ref">
+                    <field name="VAR">candles_3</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+
+              <!-- ── Extract OHLC of last candle ── -->
+              <block type="variables_set" id="s2_set_open">
+                <field name="VAR">lc_open</field>
+                <value name="VALUE">
+                  <block type="ohlcopen" id="s2_get_open">
+                    <value name="OHLCOBJ">
+                      <block type="variables_get" id="s2_last_candle_ref1">
+                        <field name="VAR">last_candle</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="s2_set_close">
+                    <field name="VAR">lc_close</field>
+                    <value name="VALUE">
+                      <block type="ohlcclose" id="s2_get_close">
+                        <value name="OHLCOBJ">
+                          <block type="variables_get" id="s2_last_candle_ref2">
+                            <field name="VAR">last_candle</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="s2_set_high">
+                        <field name="VAR">lc_high</field>
+                        <value name="VALUE">
+                          <block type="ohlchigh" id="s2_get_high">
+                            <value name="OHLCOBJ">
+                              <block type="variables_get" id="s2_last_candle_ref3">
+                                <field name="VAR">last_candle</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="s2_set_low">
+                            <field name="VAR">lc_low</field>
+                            <value name="VALUE">
+                              <block type="ohlclow" id="s2_get_low">
+                                <value name="OHLCOBJ">
+                                  <block type="variables_get" id="s2_last_candle_ref4">
+                                    <field name="VAR">last_candle</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+
+                              <!-- ── body_size = abs(close - open) ── -->
+                              <block type="variables_set" id="s2_set_body">
+                                <field name="VAR">body_size</field>
+                                <value name="VALUE">
+                                  <block type="math_single" id="s2_abs_body">
+                                    <field name="OP">ABS</field>
+                                    <value name="NUM">
+                                      <block type="math_arithmetic" id="s2_close_minus_open">
+                                        <field name="OP">MINUS</field>
+                                        <value name="A">
+                                          <block type="variables_get" id="s2_close_ref1">
+                                            <field name="VAR">lc_close</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="variables_get" id="s2_open_ref1">
+                                            <field name="VAR">lc_open</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+
+                                  <!-- ── total_range = high - low ── -->
+                                  <block type="variables_set" id="s2_set_range">
+                                    <field name="VAR">total_range</field>
+                                    <value name="VALUE">
+                                      <block type="math_arithmetic" id="s2_high_minus_low">
+                                        <field name="OP">MINUS</field>
+                                        <value name="A">
+                                          <block type="variables_get" id="s2_high_ref">
+                                            <field name="VAR">lc_high</field>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="variables_get" id="s2_low_ref">
+                                            <field name="VAR">lc_low</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <next>
+
+                                      <!-- ── body_ratio = body_size / total_range ── -->
+                                      <block type="variables_set" id="s2_set_ratio">
+                                        <field name="VAR">body_ratio</field>
+                                        <value name="VALUE">
+                                          <block type="math_arithmetic" id="s2_body_div_range">
+                                            <field name="OP">DIVIDE</field>
+                                            <value name="A">
+                                              <block type="variables_get" id="s2_body_ref">
+                                                <field name="VAR">body_size</field>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="variables_get" id="s2_range_ref">
+                                                <field name="VAR">total_range</field>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <next>
+
+                                          <!-- ── Check: body >= 3 AND ratio >= 0.6 ── -->
+                                          <block type="controls_if" id="s2_momentum_check">
+                                            <value name="IF0">
+                                              <block type="logic_operation" id="s2_momentum_cond">
+                                                <field name="OP">AND</field>
+                                                <value name="A">
+                                                  <block type="logic_compare" id="s2_body_gte_3">
+                                                    <field name="OP">GTE</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="s2_body_check">
+                                                        <field name="VAR">body_size</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number" id="s2_three">
+                                                        <field name="NUM">3</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="logic_compare" id="s2_ratio_gte_06">
+                                                    <field name="OP">GTE</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="s2_ratio_check">
+                                                        <field name="VAR">body_ratio</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number" id="s2_point_six">
+                                                        <field name="NUM">0.6</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <statement name="DO0">
+                                              <!-- Momentum detected — determine direction -->
+                                              <block type="controls_if" id="s2_dir_check">
+                                                <mutation elseif="1"></mutation>
+                                                <value name="IF0">
+                                                  <!-- Bullish: close > open -->
+                                                  <block type="logic_compare" id="s2_bull_candle">
+                                                    <field name="OP">GT</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="s2_close_ref2">
+                                                        <field name="VAR">lc_close</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="variables_get" id="s2_open_ref2">
+                                                        <field name="VAR">lc_open</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                  <block type="variables_set" id="s2_set_call">
+                                                    <field name="VAR">trade_direction</field>
+                                                    <value name="VALUE">
+                                                      <block type="text" id="s2_call_text">
+                                                        <field name="TEXT">CALL</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                                <value name="IF1">
+                                                  <!-- Bearish: close < open -->
+                                                  <block type="logic_compare" id="s2_bear_candle">
+                                                    <field name="OP">LT</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="s2_close_ref3">
+                                                        <field name="VAR">lc_close</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="variables_get" id="s2_open_ref3">
+                                                        <field name="VAR">lc_open</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <statement name="DO1">
+                                                  <block type="variables_set" id="s2_set_put">
+                                                    <field name="VAR">trade_direction</field>
+                                                    <value name="VALUE">
+                                                      <block type="text" id="s2_put_text">
+                                                        <field name="TEXT">PUT</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </statement>
+                                          </block>
+
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BEFORE PURCHASE — Initialize vars on first run,
+       run Strategy 1 then (if no signal) Strategy 2,
+       purchase CALL or PUT based on trade_direction
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="before_purchase" id="before_purchase_main" deletable="false" x="0" y="665">
+    <statement name="BEFOREPURCHASE_STACK">
+
+      <!-- Guard: only trade if is_trading_active == true -->
+      <block type="controls_if" id="bp_active_guard">
+        <value name="IF0">
+          <block type="variables_get" id="bp_get_active">
+            <field name="VAR">is_trading_active</field>
+          </block>
+        </value>
+        <statement name="DO0">
+
+          <!-- Reset direction to NONE before each cycle -->
+          <block type="variables_set" id="bp_reset_dir">
+            <field name="VAR">trade_direction</field>
+            <value name="VALUE">
+              <block type="text" id="bp_none_text">
+                <field name="TEXT">NONE</field>
+              </block>
+            </value>
+            <next>
+
+              <!-- Run Strategy 1 -->
+              <block type="procedures_callnoreturn" id="bp_call_s1">
+                <mutation name="run_strategy_1"></mutation>
+                <next>
+
+                  <!-- If S1 gave no signal, run Strategy 2 -->
+                  <block type="controls_if" id="bp_s1_no_signal">
+                    <value name="IF0">
+                      <block type="logic_compare" id="bp_check_none">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="variables_get" id="bp_dir_ref1">
+                            <field name="VAR">trade_direction</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="text" id="bp_none_compare">
+                            <field name="TEXT">NONE</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <statement name="DO0">
+                      <block type="procedures_callnoreturn" id="bp_call_s2">
+                        <mutation name="run_strategy_2"></mutation>
+                      </block>
+                    </statement>
+                    <next>
+
+                      <!-- Purchase based on trade_direction -->
+                      <block type="controls_if" id="bp_purchase_decision">
+                        <mutation elseif="1"></mutation>
+                        <value name="IF0">
+                          <block type="logic_compare" id="bp_is_call">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="variables_get" id="bp_dir_ref2">
+                                <field name="VAR">trade_direction</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="text" id="bp_call_compare">
+                                <field name="TEXT">CALL</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <!-- Buy RISE -->
+                          <block type="purchase" id="bp_purchase_call">
+                            <field name="PURCHASE_LIST">CALL</field>
+                          </block>
+                        </statement>
+                        <value name="IF1">
+                          <block type="logic_compare" id="bp_is_put">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="variables_get" id="bp_dir_ref3">
+                                <field name="VAR">trade_direction</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="text" id="bp_put_compare">
+                                <field name="TEXT">PUT</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO1">
+                          <!-- Buy FALL -->
+                          <block type="purchase" id="bp_purchase_put">
+                            <field name="PURCHASE_LIST">PUT</field>
+                          </block>
+                        </statement>
+                      </block>
+
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       DURING PURCHASE — Early sell check
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="during_purchase" id="during_purchase_main" x="714" y="60">
+    <statement name="DURING_PURCHASE_STACK">
+      <block type="controls_if" id="dp_sell_check">
+        <value name="IF0">
+          <block type="check_sell" id="dp_check_sell"></block>
+        </value>
+      </block>
+    </statement>
+  </block>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AFTER PURCHASE — Money management:
+         • Update P&L
+         • Win → reset stake to $1
+         • Loss → stake × 2, capped at $50
+         • Stop Loss ≤ -$20 → halt
+         • Take Profit ≥ +$30 → halt
+         • Otherwise → trade again
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="after_purchase" id="after_purchase_main" x="714" y="292">
+    <statement name="AFTERPURCHASE_STACK">
+
+      <!-- Update cumulative P&L -->
+      <block type="variables_set" id="ap_update_pnl">
+        <field name="VAR">total_pnl</field>
+        <value name="VALUE">
+          <block type="math_arithmetic" id="ap_pnl_add">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="ap_pnl_ref">
+                <field name="VAR">total_pnl</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="contract_check_result" id="ap_get_profit">
+                <field name="RESULT">profit</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+
+          <!-- Win / Loss branching -->
+          <block type="controls_if" id="ap_win_loss_check">
+            <mutation elseif="1"></mutation>
+            <value name="IF0">
+              <!-- Win: profit > 0 -->
+              <block type="logic_compare" id="ap_win_cond">
+                <field name="OP">GT</field>
+                <value name="A">
+                  <block type="contract_check_result" id="ap_profit_win_check">
+                    <field name="RESULT">profit</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="ap_zero_win">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <!-- WIN: increment win_count, reset stake → $1 -->
+              <block type="variables_set" id="ap_inc_wins">
+                <field name="VAR">win_count</field>
+                <value name="VALUE">
+                  <block type="math_arithmetic" id="ap_wins_plus1">
+                    <field name="OP">ADD</field>
+                    <value name="A">
+                      <block type="variables_get" id="ap_wins_ref">
+                        <field name="VAR">win_count</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="ap_one_win">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="ap_reset_stake">
+                    <field name="VAR">current_stake</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="ap_initial_stake">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <value name="IF1">
+              <!-- Loss: profit < 0 -->
+              <block type="logic_compare" id="ap_loss_cond">
+                <field name="OP">LT</field>
+                <value name="A">
+                  <block type="contract_check_result" id="ap_profit_loss_check">
+                    <field name="RESULT">profit</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="ap_zero_loss">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO1">
+              <!-- LOSS: increment loss_count, double stake (capped at $50) -->
+              <block type="variables_set" id="ap_inc_losses">
+                <field name="VAR">loss_count</field>
+                <value name="VALUE">
+                  <block type="math_arithmetic" id="ap_losses_plus1">
+                    <field name="OP">ADD</field>
+                    <value name="A">
+                      <block type="variables_get" id="ap_losses_ref">
+                        <field name="VAR">loss_count</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="ap_one_loss">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <!-- new_stake = constrain(current_stake * 2, 1, 50) -->
+                  <block type="variables_set" id="ap_martingale_stake">
+                    <field name="VAR">current_stake</field>
+                    <value name="VALUE">
+                      <block type="math_constrain" id="ap_stake_constrain">
+                        <value name="VALUE">
+                          <block type="math_arithmetic" id="ap_double_stake">
+                            <field name="OP">MULTIPLY</field>
+                            <value name="A">
+                              <block type="variables_get" id="ap_stake_ref">
+                                <field name="VAR">current_stake</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="ap_two_mult">
+                                <field name="NUM">2</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="LOW">
+                          <block type="math_number" id="ap_stake_min">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                        <value name="HIGH">
+                          <block type="math_number" id="ap_stake_max">
+                            <field name="NUM">50</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+
+              <!-- ── Stop Loss check: total_pnl <= -20 ── -->
+              <block type="controls_if" id="ap_sl_check">
+                <mutation elseif="1" else="1"></mutation>
+                <value name="IF0">
+                  <block type="logic_compare" id="ap_sl_cond">
+                    <field name="OP">LTE</field>
+                    <value name="A">
+                      <block type="variables_get" id="ap_pnl_sl_ref">
+                        <field name="VAR">total_pnl</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="ap_neg_twenty">
+                        <field name="NUM">-20</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <!-- Stop trading -->
+                  <block type="variables_set" id="ap_sl_deactivate">
+                    <field name="VAR">is_trading_active</field>
+                    <value name="VALUE">
+                      <block type="logic_boolean" id="ap_sl_false">
+                        <field name="BOOL">FALSE</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="text_print" id="ap_sl_notify">
+                        <value name="TEXT">
+                          <block type="text" id="ap_sl_msg">
+                            <field name="TEXT">STOP LOSS HIT — Bot halted. Total P&amp;L limit of -$20 reached.</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+
+                <!-- ── Take Profit check: total_pnl >= 30 ── -->
+                <value name="IF1">
+                  <block type="logic_compare" id="ap_tp_cond">
+                    <field name="OP">GTE</field>
+                    <value name="A">
+                      <block type="variables_get" id="ap_pnl_tp_ref">
+                        <field name="VAR">total_pnl</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="ap_thirty">
+                        <field name="NUM">30</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO1">
+                  <!-- Stop trading -->
+                  <block type="variables_set" id="ap_tp_deactivate">
+                    <field name="VAR">is_trading_active</field>
+                    <value name="VALUE">
+                      <block type="logic_boolean" id="ap_tp_false">
+                        <field name="BOOL">FALSE</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="text_print" id="ap_tp_notify">
+                        <value name="TEXT">
+                          <block type="text" id="ap_tp_msg">
+                            <field name="TEXT">TAKE PROFIT HIT — Bot halted. Total P&amp;L target of +$30 reached.</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+
+                <!-- ELSE: still within limits → continue trading -->
+                <statement name="ELSE">
+                  <block type="trade_again" id="ap_trade_again"></block>
+                </statement>
+              </block>
+
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VARIABLE INITIALIZATION — Runs at bot start.
+       Placed off-canvas; Deriv bot executes loose blocks at startup.
+       ═══════════════════════════════════════════════════════════ -->
+  <block type="variables_set" id="init_current_stake" x="-400" y="60">
+    <field name="VAR">current_stake</field>
+    <value name="VALUE">
+      <block type="math_number" id="init_stake_val">
+        <field name="NUM">1</field>
+      </block>
+    </value>
+    <next>
+      <block type="variables_set" id="init_total_pnl">
+        <field name="VAR">total_pnl</field>
+        <value name="VALUE">
+          <block type="math_number" id="init_pnl_val">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="init_win_count">
+            <field name="VAR">win_count</field>
+            <value name="VALUE">
+              <block type="math_number" id="init_wins_val">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="init_loss_count">
+                <field name="VAR">loss_count</field>
+                <value name="VALUE">
+                  <block type="math_number" id="init_losses_val">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="init_trade_direction">
+                    <field name="VAR">trade_direction</field>
+                    <value name="VALUE">
+                      <block type="text" id="init_dir_val">
+                        <field name="TEXT">NONE</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="init_is_trading_active">
+                        <field name="VAR">is_trading_active</field>
+                        <value name="VALUE">
+                          <block type="logic_boolean" id="init_active_val">
+                            <field name="BOOL">TRUE</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+
+</xml>
