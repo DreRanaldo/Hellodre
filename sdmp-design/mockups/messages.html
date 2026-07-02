@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messages · SDMP</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+<style>
+  .chat-layout { display: grid; grid-template-columns: 320px 1fr; height: calc(100vh - 67px); }
+  .threads { border-right: 1px solid var(--border); overflow-y: auto; background: var(--bg-soft); }
+  .thread { display: flex; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background var(--t-fast); }
+  .thread:hover { background: var(--bg-inset); }
+  .thread.active { background: var(--primary-soft); border-left: 3px solid var(--primary); }
+  .chat { display: flex; flex-direction: column; min-width: 0; }
+  .chat-head { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+  .chat-body { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 14px; background: var(--bg); }
+  .chat-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: center; }
+  .code-snip { background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--r-md); padding: 12px 14px; font-family: var(--font-mono); font-size: .78rem; white-space: pre; overflow-x: auto; }
+  .day-sep { align-self: center; font-size: .72rem; color: var(--text-3); background: var(--bg-inset); padding: 3px 12px; border-radius: var(--r-full); }
+  .typing i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--text-3); margin-right: 3px; animation: pulse-dot 1.2s infinite; }
+  .typing i:nth-child(2) { animation-delay: .2s; } .typing i:nth-child(3) { animation-delay: .4s; }
+  @media (max-width: 900px) { .chat-layout { grid-template-columns: 1fr; } .threads { display: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="side-brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="side-label">Workspace</div>
+    <a class="side-link" href="dashboard.html">📊 Dashboard</a>
+    <a class="side-link" href="project.html">📁 Projects <span class="badge badge-primary">4</span></a>
+    <a class="side-link active" href="messages.html">💬 Messages <span class="badge badge-danger">3</span></a>
+    <a class="side-link" href="#">🔔 Notifications <span class="badge badge-neutral">9</span></a>
+    <div class="side-label">Finance</div>
+    <a class="side-link" href="wallet.html">👛 Wallet &amp; Escrow</a>
+    <div class="side-label">Talent</div>
+    <a class="side-link" href="browse.html">🔍 Find Developers</a>
+    <div style="flex:1"></div>
+    <a class="side-link" href="#">⚙️ Settings</a>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <b>Messages</b>
+      <div style="flex:1"></div>
+      <button class="theme-toggle">🌙</button>
+      <button class="btn btn-primary btn-sm">+ New message</button>
+    </div>
+
+    <div class="chat-layout">
+      <!-- Threads -->
+      <div class="threads">
+        <div class="thread active">
+          <span class="avatar-wrap"><span class="avatar a2 online">MK</span></span>
+          <div class="flex1" style="min-width:0"><div class="row between"><b class="small">Maya Kim</b><span class="tiny text-3">2m</span></div><div class="tiny text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pushed the charting module — ready for QA 🎉</div></div>
+          <span class="badge badge-danger">2</span>
+        </div>
+        <div class="thread">
+          <span class="avatar a3">RT</span>
+          <div class="flex1" style="min-width:0"><div class="row between"><b class="small">Rita Torres (QA)</b><span class="tiny text-3">1h</span></div><div class="tiny text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Found 2 minor bugs in the export flow…</div></div>
+          <span class="badge badge-danger">1</span>
+        </div>
+        <div class="thread">
+          <span class="avatar-wrap"><span class="avatar a4 online">DA</span></span>
+          <div class="flex1" style="min-width:0"><div class="row between"><b class="small">Diego Alvarez</b><span class="tiny text-3">3h</span></div><div class="tiny text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Daily update: auth + onboarding done ✓</div></div>
+        </div>
+        <div class="thread">
+          <span class="avatar a5">SD</span>
+          <div class="flex1" style="min-width:0"><div class="row between"><b class="small">SDMP Support</b><span class="tiny text-3">2d</span></div><div class="tiny text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your refund for INV-1031 has been processed</div></div>
+        </div>
+      </div>
+
+      <!-- Conversation -->
+      <div class="chat">
+        <div class="chat-head">
+          <span class="avatar-wrap"><span class="avatar a2 online">MK</span></span>
+          <div class="flex1"><b class="small">Maya Kim</b><div class="tiny" style="color:var(--success)">● Online · Fintech Dashboard</div></div>
+          <button class="btn btn-secondary btn-sm">📞 Voice</button>
+          <button class="btn btn-secondary btn-sm">🎥 Video</button>
+          <button class="btn btn-secondary btn-sm">🖥️ Share screen</button>
+        </div>
+
+        <div class="chat-body">
+          <span class="day-sep">Today · July 2</span>
+
+          <div class="msg"><span class="avatar sm a2">MK</span><div>
+            <div class="bubble">Morning Andre! The real-time chart streaming is in. WebSocket layer pushes deltas every 500ms with backpressure handling.</div>
+            <div class="tiny text-3 mt-1">9:14 AM</div>
+          </div></div>
+
+          <div class="msg"><span class="avatar sm a2">MK</span><div>
+            <div class="bubble">Here's the subscription hook if you want a peek:
+              <div class="code-snip mt-1">const usePriceStream = (symbol: string) =&gt;
+  useSubscription(PRICE_STREAM, {
+    variables: { symbol },
+    onData: ({ data }) =&gt; buffer.push(data),
+  });</div>
+            </div>
+            <div class="tiny text-3 mt-1">9:15 AM</div>
+          </div></div>
+
+          <div class="msg me"><div>
+            <div class="bubble">This looks great! 🔥 How does it behave on flaky connections?</div>
+            <div class="tiny text-3 mt-1" style="text-align:right">9:22 AM · Read ✓✓</div>
+          </div></div>
+
+          <div class="msg"><span class="avatar sm a2">MK</span><div>
+            <div class="bubble">Auto-reconnect with exponential backoff, and the buffer replays missed deltas. Rita can hammer it in QA — I added a network-throttle test case to the checklist.</div>
+            <div class="tiny text-3 mt-1">9:24 AM</div>
+          </div></div>
+
+          <div class="msg"><span class="avatar sm a2">MK</span><div>
+            <div class="bubble">📎 <b>milestone-2-demo.mp4</b> <span class="tiny text-3">(38 MB)</span><br><span class="tiny text-3">Friday demo recording — full walkthrough of M2</span></div>
+            <div class="tiny text-3 mt-1">9:26 AM</div>
+          </div></div>
+
+          <div class="card pad row between" style="align-self:center;max-width:480px;width:100%;border-color:var(--primary)">
+            <div class="small"><b>🔒 Milestone 2 submitted for approval</b><div class="tiny text-3">$4,000 releases after QA verification + your approval</div></div>
+            <a class="btn btn-primary btn-sm" href="project.html">Review</a>
+          </div>
+
+          <div class="msg"><span class="avatar sm a2">MK</span><div class="bubble typing"><i></i><i></i><i></i></div></div>
+        </div>
+
+        <div class="chat-foot">
+          <button class="btn btn-ghost btn-sm">📎</button>
+          <button class="btn btn-ghost btn-sm">{ }</button>
+          <button class="btn btn-ghost btn-sm">🎤</button>
+          <input class="input" style="border-radius:var(--r-full)" placeholder="Message Maya… (@task to mention a task)">
+          <button class="btn btn-primary btn-sm" style="border-radius:var(--r-full);padding:9px 18px">Send ➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/sdmp.js"></script>
+</body>
+</html>

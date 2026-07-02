@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · SDMP</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar">
+    <a class="side-brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="side-label">Workspace</div>
+    <a class="side-link active" href="dashboard.html">📊 Dashboard</a>
+    <a class="side-link" href="project.html">📁 Projects <span class="badge badge-primary">4</span></a>
+    <a class="side-link" href="messages.html">💬 Messages <span class="badge badge-danger">3</span></a>
+    <a class="side-link" href="#">🔔 Notifications <span class="badge badge-neutral">9</span></a>
+    <a class="side-link" href="#">📅 Calendar</a>
+    <a class="side-link" href="#">✅ Tasks</a>
+    <div class="side-label">Finance</div>
+    <a class="side-link" href="wallet.html">👛 Wallet &amp; Escrow</a>
+    <a class="side-link" href="wallet.html">🧾 Invoices</a>
+    <div class="side-label">Talent</div>
+    <a class="side-link" href="browse.html">🔍 Find Developers</a>
+    <a class="side-link" href="browse.html">🧪 Find Testers</a>
+    <a class="side-link" href="#">⭐ Reviews</a>
+    <div style="flex:1"></div>
+    <a class="side-link" href="admin.html">🛠️ Admin Panel</a>
+    <a class="side-link" href="#">⚙️ Settings</a>
+  </aside>
+
+  <!-- ===== Main ===== -->
+  <div class="main">
+    <div class="topbar">
+      <div class="search-bar flex1" style="max-width:440px;padding:8px 16px">🔍 <input placeholder="Search projects, developers, messages…"></div>
+      <div style="flex:1"></div>
+      <button class="theme-toggle">🌙</button>
+      <button class="btn btn-primary btn-sm">+ New Project</button>
+      <span class="avatar-wrap"><span class="avatar a5 online">AG</span></span>
+    </div>
+
+    <div class="content">
+      <div class="row between">
+        <div><h1 class="h-xl">Good morning, Andre 👋</h1><p class="text-2">Here's what's happening across your projects.</p></div>
+        <span class="badge badge-success"><span class="dot pulse"></span> All systems normal</span>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid g4">
+        <div class="card stat"><span class="k">Active Projects</span><span class="v">4</span><span class="d up">▲ 1 this month</span></div>
+        <div class="card stat"><span class="k">In Escrow</span><span class="v">$27,500</span><span class="d text-3">across 4 projects</span></div>
+        <div class="card stat"><span class="k">Released This Month</span><span class="v">$9,200</span><span class="d up">▲ 18% vs May</span></div>
+        <div class="card stat"><span class="k">Avg. Milestone Approval</span><span class="v">1.8 days</span><span class="d up">▼ 0.4 days faster</span></div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:1.6fr 1fr">
+        <!-- Active projects -->
+        <div class="card pad col">
+          <div class="row between"><b class="h-md">Active projects</b><a class="small" style="color:var(--primary)" href="project.html">View all →</a></div>
+          <div class="col">
+            <a class="card hover pad row" href="project.html" style="gap:16px">
+              <span class="avatar a2">FD</span>
+              <div class="flex1">
+                <div class="row between"><b>Fintech Dashboard</b><span class="badge badge-warning">In QA</span></div>
+                <div class="small text-3">Maya Kim · Milestone 2 of 3 · due Jul 14</div>
+                <div class="progress mt-1"><i style="width:66%"></i></div>
+              </div>
+            </a>
+            <a class="card hover pad row" href="project.html" style="gap:16px">
+              <span class="avatar a4">FA</span>
+              <div class="flex1">
+                <div class="row between"><b>Fitness App (iOS/Android)</b><span class="badge badge-primary">In Progress</span></div>
+                <div class="small text-3">Diego Alvarez · Milestone 1 of 4 · due Jul 22</div>
+                <div class="progress mt-1"><i style="width:25%"></i></div>
+              </div>
+            </a>
+            <a class="card hover pad row" href="project.html" style="gap:16px">
+              <span class="avatar a3">AI</span>
+              <div class="flex1">
+                <div class="row between"><b>Support AI Agent</b><span class="badge badge-accent">Reviewing proposals</span></div>
+                <div class="small text-3">31 proposals · budget $6,000–$9,500</div>
+                <div class="progress mt-1"><i style="width:8%"></i></div>
+              </div>
+            </a>
+            <a class="card hover pad row" href="project.html" style="gap:16px">
+              <span class="avatar a5">MW</span>
+              <div class="flex1">
+                <div class="row between"><b>Marketing Website</b><span class="badge badge-success">Completed</span></div>
+                <div class="small text-3">Delivered Jun 20 · ★ 5.0 review left</div>
+                <div class="progress success mt-1"><i style="width:100%"></i></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right rail -->
+        <div class="col" style="gap:20px">
+          <!-- Action needed -->
+          <div class="card pad col" style="border-color:var(--warning)">
+            <b class="h-md">⚡ Needs your action</b>
+            <div class="col gap-sm">
+              <div class="row between card pad" style="padding:12px 14px">
+                <div class="small"><b>Approve Milestone 2</b><div class="tiny text-3">Fintech Dashboard · QA passed ✓</div></div>
+                <button class="btn btn-success btn-sm">Review</button>
+              </div>
+              <div class="row between card pad" style="padding:12px 14px">
+                <div class="small"><b>Choose a QA tester</b><div class="tiny text-3">Fitness App · 6 testers available</div></div>
+                <button class="btn btn-secondary btn-sm">Assign</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="card pad col">
+            <div class="row between"><b class="h-md">Messages</b><a class="small" style="color:var(--primary)" href="messages.html">Open inbox →</a></div>
+            <a class="row" href="messages.html"><span class="avatar sm a2">MK</span><div class="flex1 small"><b>Maya Kim</b><div class="text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pushed the charting module — ready for QA 🎉</div></div><span class="tiny text-3">2m</span></a>
+            <a class="row" href="messages.html"><span class="avatar sm a3">RT</span><div class="flex1 small"><b>Rita Torres (QA)</b><div class="text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Found 2 minor bugs in the export flow, report attached</div></div><span class="tiny text-3">1h</span></a>
+            <a class="row" href="messages.html"><span class="avatar sm a4">DA</span><div class="flex1 small"><b>Diego Alvarez</b><div class="text-3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Daily update: auth + onboarding screens done</div></div><span class="tiny text-3">3h</span></a>
+          </div>
+
+          <!-- Wallet snapshot -->
+          <div class="card pad col" style="background:var(--grad-brand);border:0;color:#fff">
+            <div class="row between"><b>Wallet</b><a class="tiny" style="color:rgba(255,255,255,.8)" href="wallet.html">Manage →</a></div>
+            <div><div class="tiny" style="color:rgba(255,255,255,.7)">ESCROW BALANCE</div><div style="font-size:1.9rem;font-weight:800">$27,500.00</div></div>
+            <div class="row small" style="color:rgba(255,255,255,.85)"><span>🔒 Locked: $23,500</span><span>· Releasable: $4,000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="card pad col">
+        <b class="h-md">Recent activity</b>
+        <table class="table">
+          <thead><tr><th>Event</th><th>Project</th><th>Amount</th><th>When</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>✅ QA report passed (34/34 checks)</td><td>Fintech Dashboard</td><td class="mono">—</td><td>12 min ago</td><td><span class="badge badge-success">Passed</span></td></tr>
+            <tr><td>🔒 Escrow funded — Milestone 1</td><td>Fitness App</td><td class="mono">$5,000.00</td><td>Yesterday</td><td><span class="badge badge-primary">Locked</span></td></tr>
+            <tr><td>💸 Payment released — Milestone 1</td><td>Fintech Dashboard</td><td class="mono">$4,000.00</td><td>Jun 26</td><td><span class="badge badge-success">Released</span></td></tr>
+            <tr><td>📝 New proposal from Amara Okafor</td><td>Support AI Agent</td><td class="mono">$8,200.00</td><td>Jun 25</td><td><span class="badge badge-neutral">Pending</span></td></tr>
+            <tr><td>⭐ You rated Maya Kim ★★★★★</td><td>Marketing Website</td><td class="mono">—</td><td>Jun 20</td><td><span class="badge badge-accent">Review</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/sdmp.js"></script>
+</body>
+</html>

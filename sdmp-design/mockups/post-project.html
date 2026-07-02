@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post a Project · SDMP</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+<style>
+  .wizard { max-width: 880px; margin: 0 auto; }
+  .wsteps { display: flex; gap: 8px; }
+  .wstep { flex: 1; display: flex; flex-direction: column; gap: 6px; font-size: .78rem; font-weight: 600; color: var(--text-3); }
+  .wstep i { height: 5px; border-radius: var(--r-full); background: var(--bg-inset); }
+  .wstep.done { color: var(--success); } .wstep.done i { background: var(--success); }
+  .wstep.now { color: var(--primary); } .wstep.now i { background: var(--grad-brand); }
+  .drop { border: 2px dashed var(--border-strong); border-radius: var(--r-lg); padding: 34px; text-align: center; color: var(--text-3); transition: all var(--t-fast); }
+  .drop:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+  .vis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .vis label { border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 14px; cursor: pointer; transition: all var(--t-fast); display: flex; flex-direction: column; gap: 4px; }
+  .vis input { display: none; }
+  .vis label:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="side-brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="side-label">Workspace</div>
+    <a class="side-link" href="dashboard.html">📊 Dashboard</a>
+    <a class="side-link active" href="project.html">📁 Projects <span class="badge badge-primary">4</span></a>
+    <a class="side-link" href="messages.html">💬 Messages <span class="badge badge-danger">3</span></a>
+    <div class="side-label">Finance</div>
+    <a class="side-link" href="wallet.html">👛 Wallet &amp; Escrow</a>
+    <div class="side-label">Talent</div>
+    <a class="side-link" href="browse.html">🔍 Find Developers</a>
+    <div style="flex:1"></div>
+    <a class="side-link" href="#">⚙️ Settings</a>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <a class="small text-3" href="dashboard.html">Projects /</a><b>New Project</b>
+      <div style="flex:1"></div>
+      <button class="theme-toggle">🌙</button>
+      <button class="btn btn-ghost btn-sm">Save draft</button>
+    </div>
+
+    <div class="content">
+      <div class="wizard col" style="gap:24px">
+        <div>
+          <h1 class="h-xl">Post a project</h1>
+          <p class="text-2">Tell us what you're building. Our AI estimator will suggest scope, budget, and matching developers.</p>
+        </div>
+
+        <div class="wsteps">
+          <div class="wstep done"><i></i>1 · Basics ✓</div>
+          <div class="wstep now"><i></i>2 · Details &amp; budget</div>
+          <div class="wstep"><i></i>3 · Milestones</div>
+          <div class="wstep"><i></i>4 · Review &amp; fund escrow</div>
+        </div>
+
+        <div class="card pad col" style="gap:18px">
+          <div class="field"><label>Project title</label><input class="input" value="Customer-Support AI Agent"></div>
+          <div class="field"><label>Description</label><textarea class="input" rows="4">RAG-powered chatbot over our product docs with human-handoff, conversation analytics, and a small admin console. Must integrate with our existing Postgres + Next.js stack.</textarea></div>
+          <div class="grid g2">
+            <div class="field"><label>Budget range (USD)</label><div class="row gap-sm"><input class="input" value="$6,000"><input class="input" value="$9,500"></div></div>
+            <div class="field"><label>Deadline</label><input class="input" value="August 15, 2026"></div>
+          </div>
+          <div class="field"><label>Tech stack</label>
+            <div class="row wrap gap-sm">
+              <span class="chip active">Python</span><span class="chip active">Claude API</span><span class="chip active">PostgreSQL</span><span class="chip active">Next.js</span><span class="chip">+ Add</span>
+            </div>
+          </div>
+          <div class="grid g2">
+            <div class="field"><label>Repository (optional)</label><input class="input" placeholder="github.com/acme/support-agent"></div>
+            <div class="field"><label>Figma links (optional)</label><input class="input" placeholder="figma.com/file/…"></div>
+          </div>
+          <div class="field"><label>Attachments</label><div class="drop">📎 Drag &amp; drop requirements, specs, or wireframes<br><span class="tiny">PDF, DOCX, PNG, ZIP · up to 100 MB</span></div></div>
+          <div class="grid g2">
+            <div class="field"><label>Priority</label><select class="input"><option>Normal</option><option selected>High</option><option>Urgent</option></select></div>
+            <div class="field"><label>QA testing</label><select class="input"><option selected>Required — auto-assign tester</option><option>Required — I'll choose a tester</option><option>Optional</option></select></div>
+          </div>
+          <div class="field"><label>Visibility</label>
+            <div class="vis">
+              <label><input type="radio" name="vis" checked><b class="small">🌐 Public</b><span class="tiny text-3">Any developer can apply</span></label>
+              <label><input type="radio" name="vis"><b class="small">🔒 Private</b><span class="tiny text-3">Hidden from search</span></label>
+              <label><input type="radio" name="vis"><b class="small">✉️ Invite only</b><span class="tiny text-3">Only invited devs see it</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI estimator -->
+        <div class="card glass pad col gap-sm" style="border-color:var(--accent)">
+          <div class="row between"><b class="h-md">✨ AI Project Estimator</b><span class="badge badge-accent">Beta</span></div>
+          <div class="grid g3">
+            <div><div class="tiny text-3">SUGGESTED BUDGET</div><b>$7,800 – $9,200</b></div>
+            <div><div class="tiny text-3">PREDICTED TIMELINE</div><b>5–7 weeks</b></div>
+            <div><div class="tiny text-3">RISK ANALYSIS</div><b class="up">Low · well-scoped</b></div>
+          </div>
+          <p class="small text-2">Suggested milestones: ① Ingestion + RAG pipeline ② Chat UI + handoff ③ Analytics console + hardening. 12 strong developer matches found — top match: <b>Amara Okafor (98%)</b>.</p>
+        </div>
+
+        <div class="row between">
+          <button class="btn btn-secondary">← Back</button>
+          <button class="btn btn-primary btn-lg">Continue to milestones →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/sdmp.js"></script>
+</body>
+</html>
