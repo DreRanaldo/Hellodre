@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fintech Dashboard · Project Workspace · SDMP</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+<style>
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); }
+  .tab { padding: 10px 18px; font-size: .88rem; font-weight: 600; color: var(--text-3); border-bottom: 2px solid transparent; }
+  .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .commit { display: flex; gap: 10px; align-items: center; font-size: .82rem; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+  .commit:last-child { border-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="side-brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="side-label">Workspace</div>
+    <a class="side-link" href="dashboard.html">📊 Dashboard</a>
+    <a class="side-link active" href="project.html">📁 Projects <span class="badge badge-primary">4</span></a>
+    <a class="side-link" href="messages.html">💬 Messages <span class="badge badge-danger">3</span></a>
+    <a class="side-link" href="#">🔔 Notifications <span class="badge badge-neutral">9</span></a>
+    <a class="side-link" href="#">📅 Calendar</a>
+    <div class="side-label">Finance</div>
+    <a class="side-link" href="wallet.html">👛 Wallet &amp; Escrow</a>
+    <div class="side-label">Talent</div>
+    <a class="side-link" href="browse.html">🔍 Find Developers</a>
+    <a class="side-link" href="browse.html">🧪 Find Testers</a>
+    <div style="flex:1"></div>
+    <a class="side-link" href="#">⚙️ Settings</a>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <a class="small text-3" href="dashboard.html">Projects /</a>
+      <b>Fintech Dashboard</b>
+      <span class="badge badge-warning">In QA</span>
+      <div style="flex:1"></div>
+      <button class="theme-toggle">🌙</button>
+      <button class="btn btn-secondary btn-sm">🎥 Start call</button>
+      <button class="btn btn-primary btn-sm">Submit for approval</button>
+    </div>
+
+    <div class="content">
+      <!-- Project header -->
+      <div class="card pad">
+        <div class="row between wrap" style="gap:18px">
+          <div class="row" style="gap:16px">
+            <span class="avatar lg a2">FD</span>
+            <div>
+              <b class="h-lg">Fintech Dashboard · React + Go</b>
+              <div class="small text-3">Client: Andre Grant · Developer: Maya Kim · QA: Rita Torres · Private project</div>
+              <div class="row gap-sm mt-1"><span class="badge badge-neutral">React</span><span class="badge badge-neutral">Go</span><span class="badge badge-neutral">PostgreSQL</span><span class="badge badge-neutral">AWS</span><span class="badge badge-neutral">Figma ↗</span><span class="badge badge-neutral">repo: acme/fintech-dash ↗</span></div>
+            </div>
+          </div>
+          <div class="col center" style="gap:4px">
+            <div class="tiny text-3">ESCROW</div>
+            <b style="font-size:1.5rem">$12,000</b>
+            <span class="badge badge-success">$8,000 released · $4,000 locked 🔒</span>
+          </div>
+        </div>
+        <div class="tabs mt-3">
+          <span class="tab active">Board</span><span class="tab">Timeline</span><span class="tab">Milestones</span><span class="tab">Files</span><span class="tab">QA Reports</span><span class="tab">Commits</span><span class="tab">Settings</span>
+        </div>
+      </div>
+
+      <!-- Kanban -->
+      <div class="kanban hide-scroll">
+        <div class="kcol">
+          <div class="kcol-head"><span class="dot" style="color:var(--text-3)"></span> Backlog <span class="text-3">· 2</span></div>
+          <div class="kcard"><span class="badge badge-neutral tiny">SDMP-24</span><b class="small">Multi-currency support</b><div class="row between"><span class="avatar sm a2">MK</span><span class="tiny text-3">M3</span></div></div>
+          <div class="kcard"><span class="badge badge-neutral tiny">SDMP-25</span><b class="small">CSV bulk import</b><div class="row between"><span class="avatar sm a2">MK</span><span class="tiny text-3">M3</span></div></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-head"><span class="dot" style="color:var(--primary)"></span> To Do <span class="text-3">· 1</span></div>
+          <div class="kcard"><span class="badge badge-primary tiny">SDMP-22</span><b class="small">Audit log viewer</b><div class="row between"><span class="avatar sm a2">MK</span><span class="tiny text-3">M3</span></div></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-head"><span class="dot" style="color:var(--secondary)"></span> Doing <span class="text-3">· 1</span></div>
+          <div class="kcard" style="border-color:var(--secondary)"><span class="badge badge-secondary tiny">SDMP-19</span><b class="small">Real-time chart streaming</b><div class="progress"><i style="width:60%"></i></div><div class="row between"><span class="avatar sm a2">MK</span><span class="tiny text-3">M2 · due Jul 10</span></div></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-head"><span class="dot" style="color:var(--warning)"></span> Testing <span class="text-3">· 2</span></div>
+          <div class="kcard" style="border-color:var(--warning)"><span class="badge badge-warning tiny">SDMP-17</span><b class="small">Export to PDF/Excel</b><div class="tiny text-3">🧪 2 minor bugs reported</div><div class="row between"><span class="avatar sm a3">RT</span><span class="tiny text-3">M2</span></div></div>
+          <div class="kcard" style="border-color:var(--warning)"><span class="badge badge-warning tiny">SDMP-18</span><b class="small">Role-based dashboards</b><div class="tiny text-3">🧪 QA in progress…</div><div class="row between"><span class="avatar sm a3">RT</span><span class="tiny text-3">M2</span></div></div>
+        </div>
+        <div class="kcol">
+          <div class="kcol-head"><span class="dot" style="color:var(--success)"></span> Completed <span class="text-3">· 3</span></div>
+          <div class="kcard"><span class="badge badge-success tiny">SDMP-11</span><b class="small">Auth + 2FA</b><div class="tiny text-3">✓ QA passed · M1</div></div>
+          <div class="kcard"><span class="badge badge-success tiny">SDMP-12</span><b class="small">Account overview screens</b><div class="tiny text-3">✓ QA passed · M1</div></div>
+          <div class="kcard"><span class="badge badge-success tiny">SDMP-14</span><b class="small">Stripe billing integration</b><div class="tiny text-3">✓ QA passed · M1</div></div>
+        </div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:1.4fr 1fr">
+        <!-- Milestones -->
+        <div class="card pad col">
+          <div class="row between"><b class="h-md">Milestones &amp; escrow</b><span class="small text-3">3 milestones · $12,000 total</span></div>
+          <div class="steps mt-1">
+            <div class="step done">
+              <span class="pt">✓</span>
+              <div class="flex1">
+                <div class="row between"><b class="small">M1 — Auth, accounts &amp; billing</b><b class="small">$4,000</b></div>
+                <div class="tiny text-3">Delivered Jun 18 · QA passed · Released Jun 26 ✓</div>
+              </div>
+            </div>
+            <div class="step now">
+              <span class="pt">2</span>
+              <div class="flex1">
+                <div class="row between"><b class="small">M2 — Dashboards, charts &amp; exports</b><b class="small">$4,000</b></div>
+                <div class="tiny text-3">Submitted Jul 1 · In QA (Rita Torres) · 32/34 checks passed</div>
+                <div class="row gap-sm mt-1"><button class="btn btn-success btn-sm">Approve &amp; release</button><button class="btn btn-danger btn-sm">Request revision</button></div>
+              </div>
+            </div>
+            <div class="step">
+              <span class="pt">3</span>
+              <div class="flex1">
+                <div class="row between"><b class="small">M3 — Audit logs, import &amp; polish</b><b class="small">$4,000</b></div>
+                <div class="tiny text-3">Starts after M2 approval · due Jul 28 · 🔒 locked in escrow</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" style="gap:20px">
+          <!-- QA report -->
+          <div class="card pad col">
+            <div class="row between"><b class="h-md">Latest QA report</b><span class="badge badge-warning">2 issues</span></div>
+            <div class="row"><span class="avatar sm a3">RT</span><div class="small"><b>Rita Torres</b> · QA Specialist ★ 4.9<div class="tiny text-3">Submitted 1h ago · 32/34 acceptance checks passed</div></div></div>
+            <div class="col gap-sm">
+              <div class="card pad row between" style="padding:10px 14px"><span class="small">🐛 PDF export clips long table rows</span><span class="badge badge-warning">Minor</span></div>
+              <div class="card pad row between" style="padding:10px 14px"><span class="small">🐛 Excel export: date locale mismatch</span><span class="badge badge-warning">Minor</span></div>
+              <div class="card pad row between" style="padding:10px 14px"><span class="small">📹 Full test session recording (14:32)</span><button class="btn btn-secondary btn-sm">Watch</button></div>
+            </div>
+            <div class="row between small"><span class="text-3">Performance score</span><b class="up">96 / 100</b></div>
+            <div class="progress success"><i style="width:96%"></i></div>
+          </div>
+
+          <!-- Commits -->
+          <div class="card pad col">
+            <div class="row between"><b class="h-md">Recent commits</b><span class="badge badge-neutral">GitHub ↗</span></div>
+            <div class="commit"><code>b3f19c2</code><span class="flex1">fix: pdf export row clipping</span><span class="tiny text-3">10m</span></div>
+            <div class="commit"><code>a97d044</code><span class="flex1">feat: streaming chart websocket layer</span><span class="tiny text-3">2h</span></div>
+            <div class="commit"><code>7c21e8b</code><span class="flex1">feat: role-based dashboard routing</span><span class="tiny text-3">1d</span></div>
+            <div class="commit"><code>52aa9f1</code><span class="flex1">chore: bump go 1.24, react 19</span><span class="tiny text-3">2d</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/sdmp.js"></script>
+</body>
+</html>

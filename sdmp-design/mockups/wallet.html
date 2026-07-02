@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallet &amp; Escrow · SDMP</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="side-brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="side-label">Workspace</div>
+    <a class="side-link" href="dashboard.html">📊 Dashboard</a>
+    <a class="side-link" href="project.html">📁 Projects <span class="badge badge-primary">4</span></a>
+    <a class="side-link" href="messages.html">💬 Messages <span class="badge badge-danger">3</span></a>
+    <div class="side-label">Finance</div>
+    <a class="side-link active" href="wallet.html">👛 Wallet &amp; Escrow</a>
+    <a class="side-link" href="#">🧾 Invoices</a>
+    <a class="side-link" href="#">📑 Tax Reports</a>
+    <div class="side-label">Talent</div>
+    <a class="side-link" href="browse.html">🔍 Find Developers</a>
+    <a class="side-link" href="browse.html">🧪 Find Testers</a>
+    <div style="flex:1"></div>
+    <a class="side-link" href="#">⚙️ Settings</a>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <b>Wallet &amp; Escrow</b>
+      <div style="flex:1"></div>
+      <button class="theme-toggle">🌙</button>
+      <button class="btn btn-secondary btn-sm">Withdraw</button>
+      <button class="btn btn-primary btn-sm">+ Deposit</button>
+    </div>
+
+    <div class="content">
+      <!-- Balances -->
+      <div class="grid g4">
+        <div class="card stat" style="background:var(--grad-brand);border:0;color:#fff">
+          <span class="k" style="color:rgba(255,255,255,.7)">Total Balance</span>
+          <span class="v">$31,742.50</span>
+          <span class="d" style="color:rgba(255,255,255,.85)">USD · multi-currency enabled</span>
+        </div>
+        <div class="card stat"><span class="k">🔒 Locked in Escrow</span><span class="v">$23,500</span><span class="d text-3">4 active projects</span></div>
+        <div class="card stat"><span class="k">Releasable</span><span class="v" style="color:var(--success)">$4,000</span><span class="d text-3">pending your approval</span></div>
+        <div class="card stat"><span class="k">Available</span><span class="v">$4,242.50</span><span class="d text-3">withdraw anytime</span></div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:1.6fr 1fr">
+        <!-- Escrow by project -->
+        <div class="card pad col">
+          <b class="h-md">Escrow by project</b>
+          <table class="table">
+            <thead><tr><th>Project</th><th>Total</th><th>Released</th><th>Locked</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b>Fintech Dashboard</b><div class="tiny text-3">Maya Kim</div></td><td class="mono">$12,000</td><td class="mono up">$8,000</td><td class="mono">$4,000</td><td><span class="badge badge-warning">M2 in QA</span></td></tr>
+              <tr><td><b>Fitness App</b><div class="tiny text-3">Diego Alvarez</div></td><td class="mono">$18,000</td><td class="mono up">$0</td><td class="mono">$18,000</td><td><span class="badge badge-primary">M1 active</span></td></tr>
+              <tr><td><b>Support AI Agent</b><div class="tiny text-3">Unassigned</div></td><td class="mono">$1,500</td><td class="mono up">$0</td><td class="mono">$1,500</td><td><span class="badge badge-neutral">Deposit hold</span></td></tr>
+              <tr><td><b>Marketing Website</b><div class="tiny text-3">Maya Kim</div></td><td class="mono">$6,500</td><td class="mono up">$6,500</td><td class="mono">$0</td><td><span class="badge badge-success">Complete</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Payment methods -->
+        <div class="col" style="gap:20px">
+          <div class="card pad col gap-sm">
+            <div class="row between"><b class="h-md">Payment methods</b><button class="btn btn-ghost btn-sm">+ Add</button></div>
+            <div class="card pad row between" style="padding:12px 14px"><span class="small">💳 Visa •••• 4242</span><span class="badge badge-primary">Default</span></div>
+            <div class="card pad row between" style="padding:12px 14px"><span class="small">🅿️ PayPal · andre@…</span><span class="badge badge-neutral">Linked</span></div>
+            <div class="card pad row between" style="padding:12px 14px"><span class="small">🏦 Bank transfer (ACH)</span><span class="badge badge-neutral">Linked</span></div>
+            <div class="card pad row between" style="padding:12px 14px"><span class="small">🌍 Wise · USD/EUR/KRW</span><span class="badge badge-neutral">Linked</span></div>
+            <div class="card pad row between" style="padding:12px 14px"><span class="small">₿ Crypto (USDC)</span><button class="btn btn-secondary btn-sm">Enable</button></div>
+          </div>
+          <div class="card pad col gap-sm" style="border-color:var(--success)">
+            <b class="h-md">🔒 Escrow protection</b>
+            <p class="small text-2">Funds are held by SDMP and release only on milestone approval after QA verification. Disputes are handled by human arbitration with full audit logs.</p>
+            <a class="small" style="color:var(--primary)" href="index.html#how">How escrow works →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions -->
+      <div class="card pad col">
+        <div class="row between"><b class="h-md">Transaction history</b>
+          <div class="row gap-sm"><button class="btn btn-secondary btn-sm">Export CSV</button><button class="btn btn-secondary btn-sm">Tax report</button></div>
+        </div>
+        <table class="table">
+          <thead><tr><th>Date</th><th>Description</th><th>Type</th><th>Amount</th><th>Status</th><th>Invoice</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">Jul 01</td><td>Escrow release · Fintech Dashboard M1 → Maya Kim</td><td><span class="badge badge-success">Release</span></td><td class="mono">-$4,000.00</td><td><span class="badge badge-success">Settled</span></td><td><a style="color:var(--primary)" href="#">INV-1042</a></td></tr>
+            <tr><td class="mono">Jul 01</td><td>QA fee · Fintech Dashboard M1 → Rita Torres</td><td><span class="badge badge-accent">QA payout</span></td><td class="mono">-$320.00</td><td><span class="badge badge-success">Settled</span></td><td><a style="color:var(--primary)" href="#">INV-1043</a></td></tr>
+            <tr><td class="mono">Jun 30</td><td>Escrow deposit · Fitness App (full amount)</td><td><span class="badge badge-primary">Deposit</span></td><td class="mono">+$18,000.00</td><td><span class="badge badge-primary">Locked</span></td><td><a style="color:var(--primary)" href="#">INV-1039</a></td></tr>
+            <tr><td class="mono">Jun 24</td><td>Refund · cancelled Chrome extension project</td><td><span class="badge badge-warning">Refund</span></td><td class="mono">+$1,200.00</td><td><span class="badge badge-success">Settled</span></td><td><a style="color:var(--primary)" href="#">INV-1031</a></td></tr>
+            <tr><td class="mono">Jun 20</td><td>Escrow release · Marketing Website final → Maya Kim</td><td><span class="badge badge-success">Release</span></td><td class="mono">-$3,250.00</td><td><span class="badge badge-success">Settled</span></td><td><a style="color:var(--primary)" href="#">INV-1027</a></td></tr>
+            <tr><td class="mono">Jun 18</td><td>Platform service fee (5% · Pro plan)</td><td><span class="badge badge-neutral">Fee</span></td><td class="mono">-$162.50</td><td><span class="badge badge-success">Settled</span></td><td><a style="color:var(--primary)" href="#">INV-1026</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/sdmp.js"></script>
+</body>
+</html>

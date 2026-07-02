@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDMP — Find Expert Developers. Build Amazing Software.</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+<style>
+  .hero { position: relative; padding: 90px 0 70px; overflow: hidden; }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  .trust-row { display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap; opacity: .55; font-weight: 700; letter-spacing: .04em; font-size: .95rem; }
+  .cat-card { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .cat-icon { width: 42px; height: 42px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .dev-card { padding: 22px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .price-card { padding: 28px; display: flex; flex-direction: column; gap: 16px; position: relative; }
+  .price-card.featured { border: 2px solid var(--primary); box-shadow: 0 8px 32px rgba(37,99,235,.22); }
+  .faq-item { padding: 18px 22px; }
+  .faq-item summary { font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .faq-item summary::after { content: "+"; font-size: 1.2rem; color: var(--text-3); }
+  .faq-item[open] summary::after { content: "–"; }
+  footer { border-top: 1px solid var(--border); background: var(--bg-soft); }
+  .step-num { width: 44px; height: 44px; border-radius: var(--r-md); background: var(--grad-brand); color: #fff; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37,99,235,.35); }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ======= NAV ======= -->
+<nav class="nav glass">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="nav-links flex1">
+      <a href="browse.html">Find Talent</a>
+      <a href="browse.html">Find Work</a>
+      <a href="browse.html">Browse Projects</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <button class="theme-toggle">🌙</button>
+    <a class="btn btn-ghost" href="dashboard.html">Log in</a>
+    <a class="btn btn-primary" href="dashboard.html">Get Started</a>
+  </div>
+</nav>
+
+<!-- ======= HERO ======= -->
+<header class="hero">
+  <div class="hero-bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <div class="container hero-grid">
+    <div class="col" style="gap:22px">
+      <span class="badge badge-accent fade-up"><span class="dot pulse"></span> 12,480 developers online now</span>
+      <h1 class="h-display fade-up d1">Find Expert Developers.<br><span class="grad-text">Build Amazing Software.</span></h1>
+      <p class="text-2 fade-up d2" style="font-size:1.12rem;max-width:34rem">
+        SDMP connects businesses with vetted developers, designers, and QA testers —
+        protected by milestone-based escrow, integrated testing, and real-time collaboration.
+      </p>
+      <div class="row wrap fade-up d3">
+        <a class="btn btn-primary btn-lg" href="browse.html">Hire Developers</a>
+        <a class="btn btn-secondary btn-lg" href="browse.html">Find Work</a>
+        <a class="btn btn-ghost btn-lg" href="browse.html">Browse Projects →</a>
+      </div>
+      <div class="row wrap fade-up d4" style="gap:28px;margin-top:10px">
+        <div><b style="font-size:1.3rem">48K+</b><div class="small text-3">Projects delivered</div></div>
+        <div><b style="font-size:1.3rem">$92M</b><div class="small text-3">Paid via escrow</div></div>
+        <div><b style="font-size:1.3rem">4.9<span class="stars">★</span></b><div class="small text-3">Avg. satisfaction</div></div>
+      </div>
+    </div>
+
+    <!-- Hero mock: escrow milestone card -->
+    <div class="col fade-up d2" style="gap:16px">
+      <div class="card glass pad float" style="border-radius:var(--r-xl)">
+        <div class="row between mb-2">
+          <div class="row"><span class="avatar a2">MK</span><div><b>Maya Kim</b><div class="small text-3">Full-Stack · Verified ✓</div></div></div>
+          <span class="badge badge-success"><span class="dot"></span> Milestone 2 approved</span>
+        </div>
+        <div class="col gap-sm">
+          <div class="row between small"><span class="text-2">Fintech Dashboard · React + Go</span><b>$12,000</b></div>
+          <div class="progress"><i style="width:66%"></i></div>
+          <div class="row between tiny text-3"><span>2 of 3 milestones released</span><span>66%</span></div>
+        </div>
+        <hr class="divider mt-2 mb-2">
+        <div class="row between">
+          <span class="small text-2">🔒 $4,000 held in escrow</span>
+          <button class="btn btn-primary btn-sm">Release Payment</button>
+        </div>
+      </div>
+      <div class="card glass pad" style="border-radius:var(--r-xl);margin-left:48px">
+        <div class="row">
+          <span class="avatar a3 sm">QA</span>
+          <div class="flex1"><b class="small">QA Report · Passed</b><div class="tiny text-3">Tester verified 34/34 acceptance checks</div></div>
+          <span class="badge badge-success">PASS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ======= TRUSTED COMPANIES ======= -->
+<section class="container mt-3 mb-3">
+  <p class="center small text-3 mb-2">TRUSTED BY TEAMS AT</p>
+  <div class="trust-row">
+    <span>ACME&nbsp;CORP</span><span>Northwind</span><span>Globex</span><span>Initech</span><span>Umbrella</span><span>Stark&nbsp;Labs</span>
+  </div>
+</section>
+
+<!-- ======= CATEGORIES ======= -->
+<section class="container mt-4">
+  <div class="row between mb-3">
+    <div><h2 class="h-xl">Browse by category</h2><p class="text-2">Every discipline of software development, in one place.</p></div>
+    <a class="btn btn-secondary" href="browse.html">All categories →</a>
+  </div>
+  <div class="grid g4">
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--primary-soft)">🌐</span><b>Web Development</b><span class="small text-3">8,204 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--secondary-soft)">📱</span><b>Mobile Apps</b><span class="small text-3">4,110 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--accent-soft)">🤖</span><b>AI &amp; Machine Learning</b><span class="small text-3">2,876 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--success-soft)">☁️</span><b>Cloud &amp; DevOps</b><span class="small text-3">3,450 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--warning-soft)">🎮</span><b>Game Development</b><span class="small text-3">1,932 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--danger-soft)">🛡️</span><b>Cybersecurity</b><span class="small text-3">1,204 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--primary-soft)">🎨</span><b>UI/UX Design</b><span class="small text-3">3,780 experts</span></a>
+    <a class="card hover cat-card" href="browse.html"><span class="cat-icon" style="background:var(--accent-soft)">🧪</span><b>QA &amp; Testing</b><span class="small text-3">2,140 experts</span></a>
+  </div>
+</section>
+
+<!-- ======= TOP DEVELOPERS ======= -->
+<section class="container mt-4">
+  <div class="row between mb-3">
+    <div><h2 class="h-xl">Featured developers</h2><p class="text-2">Verified, top-rated, and ready to start.</p></div>
+    <a class="btn btn-secondary" href="browse.html">View all →</a>
+  </div>
+  <div class="grid g3">
+    <div class="card hover dev-card">
+      <div class="row" style="width:100%">
+        <span class="avatar-wrap"><span class="avatar lg a2 online">MK</span></span>
+        <div class="flex1"><b>Maya Kim</b><div class="small text-3">Senior Full-Stack · Seoul 🇰🇷</div></div>
+        <span class="badge badge-primary">✓ Verified</span>
+      </div>
+      <div class="stars">★★★★★ <span class="text-2">5.0 (312)</span></div>
+      <div class="row wrap gap-sm"><span class="badge badge-neutral">React</span><span class="badge badge-neutral">Go</span><span class="badge badge-neutral">PostgreSQL</span><span class="badge badge-neutral">AWS</span></div>
+      <div class="row between" style="width:100%"><b>$95/hr</b><a class="btn btn-primary btn-sm" href="profile.html">View Profile</a></div>
+    </div>
+    <div class="card hover dev-card">
+      <div class="row" style="width:100%">
+        <span class="avatar-wrap"><span class="avatar lg a4 online">DA</span></span>
+        <div class="flex1"><b>Diego Alvarez</b><div class="small text-3">Mobile Engineer · Bogotá 🇨🇴</div></div>
+        <span class="badge badge-warning">🏆 Top Rated</span>
+      </div>
+      <div class="stars">★★★★★ <span class="text-2">4.9 (208)</span></div>
+      <div class="row wrap gap-sm"><span class="badge badge-neutral">Flutter</span><span class="badge badge-neutral">Swift</span><span class="badge badge-neutral">Kotlin</span><span class="badge badge-neutral">Firebase</span></div>
+      <div class="row between" style="width:100%"><b>$78/hr</b><a class="btn btn-primary btn-sm" href="profile.html">View Profile</a></div>
+    </div>
+    <div class="card hover dev-card">
+      <div class="row" style="width:100%">
+        <span class="avatar-wrap"><span class="avatar lg a3">AO</span></span>
+        <div class="flex1"><b>Amara Okafor</b><div class="small text-3">ML Engineer · Lagos 🇳🇬</div></div>
+        <span class="badge badge-accent">⚡ Fast Delivery</span>
+      </div>
+      <div class="stars">★★★★★ <span class="text-2">4.9 (164)</span></div>
+      <div class="row wrap gap-sm"><span class="badge badge-neutral">Python</span><span class="badge badge-neutral">PyTorch</span><span class="badge badge-neutral">LLMs</span><span class="badge badge-neutral">GCP</span></div>
+      <div class="row between" style="width:100%"><b>$110/hr</b><a class="btn btn-primary btn-sm" href="profile.html">View Profile</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= TRENDING PROJECTS ======= -->
+<section class="container mt-4">
+  <div class="row between mb-3">
+    <div><h2 class="h-xl">Trending projects</h2><p class="text-2">Fresh opportunities posted by clients this week.</p></div>
+    <a class="btn btn-secondary" href="browse.html">Browse all →</a>
+  </div>
+  <div class="grid g3">
+    <div class="card hover pad col">
+      <div class="row between"><span class="badge badge-primary">Web App</span><span class="small text-3">2h ago</span></div>
+      <b class="h-md">B2B SaaS Analytics Dashboard</b>
+      <p class="small text-2">React + Node.js dashboard with role-based access, Stripe billing, and real-time charts.</p>
+      <div class="row wrap gap-sm"><span class="badge badge-neutral">React</span><span class="badge badge-neutral">Node.js</span><span class="badge badge-neutral">Stripe</span></div>
+      <div class="row between mt-1"><b class="grad-text">$8,000 – $12,000</b><span class="small text-3">14 proposals</span></div>
+    </div>
+    <div class="card hover pad col">
+      <div class="row between"><span class="badge badge-secondary">Mobile</span><span class="small text-3">5h ago</span></div>
+      <b class="h-md">Fitness App with Wearable Sync</b>
+      <p class="small text-2">Cross-platform app with Apple Health / Google Fit integration and social challenges.</p>
+      <div class="row wrap gap-sm"><span class="badge badge-neutral">Flutter</span><span class="badge badge-neutral">HealthKit</span><span class="badge badge-neutral">GraphQL</span></div>
+      <div class="row between mt-1"><b class="grad-text">$15,000 – $20,000</b><span class="small text-3">22 proposals</span></div>
+    </div>
+    <div class="card hover pad col">
+      <div class="row between"><span class="badge badge-accent">AI</span><span class="small text-3">1d ago</span></div>
+      <b class="h-md">Customer-Support AI Agent</b>
+      <p class="small text-2">RAG-powered chatbot over product docs with human-handoff and analytics.</p>
+      <div class="row wrap gap-sm"><span class="badge badge-neutral">Python</span><span class="badge badge-neutral">Claude API</span><span class="badge badge-neutral">Postgres</span></div>
+      <div class="row between mt-1"><b class="grad-text">$6,000 – $9,500</b><span class="small text-3">31 proposals</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= HOW IT WORKS ======= -->
+<section class="container mt-4" id="how">
+  <div class="center mb-3">
+    <h2 class="h-xl">How SDMP works</h2>
+    <p class="text-2">From idea to shipped software — with QA and escrow at every step.</p>
+  </div>
+  <div class="grid g4">
+    <div class="card pad col hover"><span class="step-num">1</span><b>Post your project</b><p class="small text-2">Describe your build — budget, deadline, tech stack, and requirements. Our AI estimator suggests scope and pricing.</p></div>
+    <div class="card pad col hover"><span class="step-num">2</span><b>Hire &amp; fund escrow</b><p class="small text-2">Compare proposals, hire the best fit, and deposit funds into SDMP escrow. Money is locked — never released early.</p></div>
+    <div class="card pad col hover"><span class="step-num">3</span><b>Build &amp; verify</b><p class="small text-2">Track milestones on a Kanban workspace with Git integration. Independent QA testers verify every deliverable.</p></div>
+    <div class="card pad col hover"><span class="step-num">4</span><b>Approve &amp; release</b><p class="small text-2">When QA passes and you approve, escrow releases automatically. Developer and tester are paid instantly.</p></div>
+  </div>
+</section>
+
+<!-- ======= ESCROW PROTECTION ======= -->
+<section class="container mt-4">
+  <div class="card glass" style="border-radius:var(--r-xl);padding:44px;position:relative;overflow:hidden">
+    <div class="hero-bg"><div class="blob b2" style="opacity:.18"></div></div>
+    <div class="grid g2" style="position:relative;align-items:center">
+      <div class="col" style="gap:14px">
+        <span class="badge badge-success">🔒 Escrow Protection</span>
+        <h2 class="h-xl">Your money moves only when the work is right.</h2>
+        <p class="text-2">Clients deposit the full amount up front, but funds stay locked with SDMP. Payments release milestone by milestone — only after QA verification and your approval. Disputes go to human arbitration with full audit logs.</p>
+        <div class="row wrap gap-sm">
+          <span class="chip">Milestone releases</span><span class="chip">Partial releases</span><span class="chip">Refunds</span><span class="chip">Chargebacks</span><span class="chip">Dispute resolution</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="steps">
+          <div class="step done"><span class="pt">✓</span><div><b class="small">Client funds escrow</b><div class="tiny text-3">$12,000 deposited &amp; locked</div></div></div>
+          <div class="step done"><span class="pt">✓</span><div><b class="small">Milestone 1 delivered</b><div class="tiny text-3">QA passed · $4,000 released</div></div></div>
+          <div class="step now"><span class="pt">3</span><div><b class="small">Milestone 2 in QA</b><div class="tiny text-3">Tester running acceptance checks</div></div></div>
+          <div class="step"><span class="pt">4</span><div><b class="small">Final approval</b><div class="tiny text-3">Remaining $8,000 releases automatically</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= TESTIMONIALS ======= -->
+<section class="container mt-4">
+  <div class="center mb-3"><h2 class="h-xl">Success stories</h2><p class="text-2">Thousands of products shipped through SDMP.</p></div>
+  <div class="grid g3">
+    <div class="card pad col hover"><div class="stars">★★★★★</div><p class="small text-2">“The escrow + QA combo removed all the risk. Our MVP shipped two weeks early and every milestone was independently verified.”</p><div class="row"><span class="avatar sm a5">JL</span><div><b class="small">James Liu</b><div class="tiny text-3">Founder, Finlytics</div></div></div></div>
+    <div class="card pad col hover"><div class="stars">★★★★★</div><p class="small text-2">“As a developer, getting paid the moment QA passes is a game changer. No more chasing invoices — ever.”</p><div class="row"><span class="avatar sm a3">AO</span><div><b class="small">Amara Okafor</b><div class="tiny text-3">ML Engineer</div></div></div></div>
+    <div class="card pad col hover"><div class="stars">★★★★★</div><p class="small text-2">“We hired a full team — dev, designer, and tester — in 48 hours. The shared workspace kept everyone in sync.”</p><div class="row"><span class="avatar sm a4">SP</span><div><b class="small">Sara Patel</b><div class="tiny text-3">CTO, Healthloop</div></div></div></div>
+  </div>
+</section>
+
+<!-- ======= PRICING ======= -->
+<section class="container mt-4" id="pricing">
+  <div class="center mb-3"><h2 class="h-xl">Simple, transparent pricing</h2><p class="text-2">Free to join. Pay only when work gets done.</p></div>
+  <div class="grid g3">
+    <div class="card price-card hover">
+      <div><b class="h-lg">Starter</b><p class="small text-3">For individuals &amp; first projects</p></div>
+      <div><span class="h-display" style="font-size:2.6rem">Free</span></div>
+      <ul class="small text-2 col gap-sm" style="list-style:none">
+        <li>✓ Post unlimited projects</li><li>✓ 10% service fee</li><li>✓ Escrow protection</li><li>✓ Standard support</li>
+      </ul>
+      <a class="btn btn-secondary" href="dashboard.html">Get started</a>
+    </div>
+    <div class="card price-card featured">
+      <span class="badge badge-primary" style="position:absolute;top:-12px;left:50%;transform:translateX(-50%)">Most Popular</span>
+      <div><b class="h-lg">Pro</b><p class="small text-3">For growing teams &amp; freelancers</p></div>
+      <div><span class="h-display" style="font-size:2.6rem">$29</span><span class="text-3">/mo</span></div>
+      <ul class="small text-2 col gap-sm" style="list-style:none">
+        <li>✓ 5% service fee</li><li>✓ Featured listings</li><li>✓ AI project estimator &amp; code review</li><li>✓ Advanced analytics</li><li>✓ Priority support</li>
+      </ul>
+      <a class="btn btn-primary" href="dashboard.html">Start free trial</a>
+    </div>
+    <div class="card price-card hover">
+      <div><b class="h-lg">Enterprise</b><p class="small text-3">For companies at scale</p></div>
+      <div><span class="h-display" style="font-size:2.6rem">Custom</span></div>
+      <ul class="small text-2 col gap-sm" style="list-style:none">
+        <li>✓ Custom fees &amp; SLAs</li><li>✓ Dedicated talent pods</li><li>✓ SSO, audit logs, compliance</li><li>✓ Global payroll &amp; invoicing</li><li>✓ Dedicated account manager</li>
+      </ul>
+      <a class="btn btn-secondary" href="dashboard.html">Contact sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FAQ ======= -->
+<section class="container mt-4" style="max-width:820px">
+  <div class="center mb-3"><h2 class="h-xl">Frequently asked questions</h2></div>
+  <div class="col">
+    <details class="card faq-item"><summary>How does escrow protect me?</summary><p class="small text-2 mt-1">Your deposit is held by SDMP — not the developer. Funds release only per milestone, after independent QA verification and your explicit approval. If anything goes wrong, our dispute team can refund or partially release.</p></details>
+    <details class="card faq-item"><summary>Who are the QA testers?</summary><p class="small text-2 mt-1">Independent, vetted QA professionals on SDMP. When a developer submits a milestone, the project enters Testing automatically; you pick a tester or let SDMP auto-assign. They deliver bug reports, screenshots, videos, and a pass/fail verdict.</p></details>
+    <details class="card faq-item"><summary>How do developers get paid?</summary><p class="small text-2 mt-1">Instantly on milestone approval — via Stripe, PayPal, Wise, bank transfer, or crypto (where available), in multiple currencies with invoices and tax reports.</p></details>
+    <details class="card faq-item"><summary>What does SDMP charge?</summary><p class="small text-2 mt-1">A platform service fee per transaction (10% Starter, 5% Pro), plus optional subscriptions, featured listings, and enterprise plans. Joining and browsing are free.</p></details>
+    <details class="card faq-item"><summary>Is my data secure?</summary><p class="small text-2 mt-1">Yes — encrypted messaging, KYC identity verification, two-factor authentication, fraud detection, GDPR compliance, and full audit logs.</p></details>
+  </div>
+</section>
+
+<!-- ======= CTA ======= -->
+<section class="container mt-4 mb-3">
+  <div class="center card pad" style="border-radius:var(--r-xl);padding:56px 24px;background:var(--grad-brand);border:0">
+    <h2 class="h-xl" style="color:#fff">Ready to build something amazing?</h2>
+    <p style="color:rgba(255,255,255,.85);max-width:32rem;margin:10px auto 24px">Join 60,000+ clients, developers, and testers shipping software the safe way.</p>
+    <div class="row" style="justify-content:center">
+      <a class="btn btn-lg" style="background:#fff;color:var(--primary)" href="dashboard.html">Hire Developers</a>
+      <a class="btn btn-lg" style="border:1.5px solid rgba(255,255,255,.6);color:#fff" href="browse.html">Find Work</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer>
+  <div class="container" style="padding:48px 24px 32px">
+    <div class="grid g4">
+      <div class="col gap-sm">
+        <a class="brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+        <p class="small text-3">The software development marketplace with escrow-backed payments and integrated QA.</p>
+      </div>
+      <div class="col gap-sm small"><b>Platform</b><a class="text-2" href="browse.html">Find Developers</a><a class="text-2" href="browse.html">Find Testers</a><a class="text-2" href="browse.html">Browse Projects</a><a class="text-2" href="#pricing">Pricing</a></div>
+      <div class="col gap-sm small"><b>Company</b><a class="text-2" href="#">About</a><a class="text-2" href="#">Careers</a><a class="text-2" href="#">Blog</a><a class="text-2" href="#">Press</a></div>
+      <div class="col gap-sm small"><b>Legal &amp; Support</b><a class="text-2" href="#">Help Center</a><a class="text-2" href="#">Trust &amp; Safety</a><a class="text-2" href="#">Terms</a><a class="text-2" href="#">Privacy · GDPR</a></div>
+    </div>
+    <hr class="divider mt-3 mb-2">
+    <div class="row between small text-3"><span>© 2026 SDMP Inc. All rights reserved.</span><span>🌐 English · USD</span></div>
+  </div>
+</footer>
+
+<script src="assets/sdmp.js"></script>
+</body>
+</html>

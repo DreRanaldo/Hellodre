@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya Kim — Senior Full-Stack Developer · SDMP</title>
+<link rel="stylesheet" href="assets/sdmp.css">
+<style>
+  .cover { height: 180px; border-radius: var(--r-xl); background: var(--grad-brand); position: relative; overflow: hidden; }
+  .cover::after { content:""; position:absolute; inset:0; background: radial-gradient(600px 200px at 80% 0%, rgba(255,255,255,.25), transparent); }
+  .profile-head { margin-top: -48px; position: relative; z-index: 1; padding: 0 28px; }
+  .layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+  .skillbar { display: grid; grid-template-columns: 120px 1fr 40px; gap: 10px; align-items: center; font-size: .85rem; }
+  .port { border-radius: var(--r-md); overflow: hidden; }
+  .port .thumb { height: 120px; display:flex; align-items:center; justify-content:center; font-size:2rem; color:#fff; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav glass">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html"><span class="logo-mark">S</span> SDMP</a>
+    <div class="nav-links flex1"><a href="browse.html">Find Talent</a><a href="browse.html">Find Work</a><a href="browse.html">Browse Projects</a></div>
+    <button class="theme-toggle">🌙</button>
+    <a class="btn btn-primary" href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<div class="container mt-3 mb-3 col" style="gap:24px">
+  <div class="cover"></div>
+  <div class="profile-head row wrap between" style="gap:18px">
+    <div class="row" style="gap:18px">
+      <span class="avatar-wrap"><span class="avatar xl a2 online" style="border:4px solid var(--bg)">MK</span></span>
+      <div class="col" style="gap:6px;padding-top:40px">
+        <div class="row wrap gap-sm"><h1 class="h-lg">Maya Kim</h1><span class="badge badge-primary">✓ Verified Developer</span><span class="badge badge-warning">🏆 Top Rated</span><span class="badge badge-accent">⚡ Fast Delivery</span></div>
+        <div class="small text-3">Senior Full-Stack Developer · Seoul, South Korea 🇰🇷 · Member since 2021 · Lv. 42 ⭐ 18,240 XP</div>
+      </div>
+    </div>
+    <div class="row" style="padding-top:40px">
+      <button class="btn btn-secondary">💬 Message</button>
+      <button class="btn btn-primary">Invite to Project</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Main column -->
+    <div class="col" style="gap:24px">
+      <div class="card pad col">
+        <b class="h-md">About</b>
+        <p class="small text-2">Fintech &amp; SaaS specialist with 8 years of production experience. I design and ship dashboards, billing systems, and high-throughput APIs — React on the front, Go on the back, PostgreSQL underneath. I work milestone-first: clear scope, daily updates, demo every Friday.</p>
+        <div class="row wrap gap-sm">
+          <span class="badge badge-neutral">React</span><span class="badge badge-neutral">TypeScript</span><span class="badge badge-neutral">Go</span><span class="badge badge-neutral">PostgreSQL</span><span class="badge badge-neutral">AWS</span><span class="badge badge-neutral">Stripe</span><span class="badge badge-neutral">GraphQL</span><span class="badge badge-neutral">Docker</span><span class="badge badge-neutral">Kubernetes</span>
+        </div>
+      </div>
+
+      <div class="card pad col">
+        <b class="h-md">Skills</b>
+        <div class="col gap-sm">
+          <div class="skillbar"><span>React / TS</span><div class="progress"><i style="width:96%"></i></div><b class="small">96</b></div>
+          <div class="skillbar"><span>Go</span><div class="progress"><i style="width:92%"></i></div><b class="small">92</b></div>
+          <div class="skillbar"><span>PostgreSQL</span><div class="progress"><i style="width:88%"></i></div><b class="small">88</b></div>
+          <div class="skillbar"><span>AWS / DevOps</span><div class="progress"><i style="width:80%"></i></div><b class="small">80</b></div>
+          <div class="skillbar"><span>UI/UX</span><div class="progress"><i style="width:72%"></i></div><b class="small">72</b></div>
+        </div>
+        <div class="tiny text-3">Verified via SDMP skill assessments · last updated Jun 2026</div>
+      </div>
+
+      <div class="card pad col">
+        <div class="row between"><b class="h-md">Portfolio</b><span class="small text-3">24 projects</span></div>
+        <div class="grid g3">
+          <div class="card hover port"><div class="thumb" style="background:linear-gradient(135deg,#2563EB,#06B6D4)">📊</div><div style="padding:12px"><b class="small">Finlytics Dashboard</b><div class="tiny text-3">React · Go · 2025</div></div></div>
+          <div class="card hover port"><div class="thumb" style="background:linear-gradient(135deg,#4F46E5,#EC4899)">💳</div><div style="padding:12px"><b class="small">PayFlow Billing</b><div class="tiny text-3">Stripe · Go · 2025</div></div></div>
+          <div class="card hover port"><div class="thumb" style="background:linear-gradient(135deg,#10B981,#06B6D4)">🏦</div><div style="padding:12px"><b class="small">NeoBank Mobile Web</b><div class="tiny text-3">React · GraphQL · 2024</div></div></div>
+        </div>
+      </div>
+
+      <div class="card pad col">
+        <div class="row between"><b class="h-md">Reviews</b><div class="stars">★★★★★ 5.0 · 312 reviews</div></div>
+        <div class="col">
+          <div class="card pad col gap-sm">
+            <div class="row between"><div class="row"><span class="avatar sm a5">JL</span><div class="small"><b>James Liu</b> · Finlytics</div></div><div class="stars small">★★★★★</div></div>
+            <p class="small text-2">“Maya delivered every milestone early and QA passed first try on two of three. Communication was flawless — daily updates, Friday demos, zero surprises.”</p>
+            <span class="tiny text-3">Fintech Dashboard · $12,000 · Jun 2026</span>
+          </div>
+          <div class="card pad col gap-sm">
+            <div class="row between"><div class="row"><span class="avatar sm a4">SP</span><div class="small"><b>Sara Patel</b> · Healthloop</div></div><div class="stars small">★★★★★</div></div>
+            <p class="small text-2">“Rebuilt our billing stack with zero downtime. Wrote docs our whole team still uses. Hire her before someone else does.”</p>
+            <span class="tiny text-3">PayFlow Billing · $18,500 · Mar 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side column -->
+    <div class="col" style="gap:20px">
+      <div class="card pad col">
+        <div class="row between"><span class="text-3 small">Hourly rate</span><b style="font-size:1.4rem">$95/hr</b></div>
+        <div class="row between"><span class="text-3 small">Availability</span><span class="badge badge-success"><span class="dot"></span> Available now</span></div>
+        <div class="row between"><span class="text-3 small">Response time</span><b class="small">~1 hour</b></div>
+        <div class="row between"><span class="text-3 small">Completed projects</span><b class="small">312</b></div>
+        <div class="row between"><span class="text-3 small">On-time delivery</span><b class="small up">98%</b></div>
+        <div class="row between"><span class="text-3 small">QA first-pass rate</span><b class="small up">91%</b></div>
+        <hr class="divider">
+        <button class="btn btn-primary">Invite to Project</button>
+        <button class="btn btn-secondary">💬 Message</button>
+      </div>
+
+      <div class="card pad col gap-sm">
+        <b class="h-md">Links</b>
+        <a class="row small text-2" href="#">🐙 github.com/mayakim <span class="badge badge-neutral" style="margin-left:auto">2.1k ★</span></a>
+        <a class="row small text-2" href="#">💼 linkedin.com/in/mayakim</a>
+        <a class="row small text-2" href="#">📄 Resume.pdf</a>
+      </div>
+
+      <div class="card pad col gap-sm">
+        <b class="h-md">Certificates</b>
+        <div class="row small text-2">🎓 AWS Solutions Architect — Pro</div>
+        <div class="row small text-2">🎓 CKA: Certified Kubernetes Admin</div>
+        <div class="row small text-2">🎓 SDMP Expert Assessment — Top 1%</div>
+      </div>
+
+      <div class="card pad col gap-sm">
+        <b class="h-md">Achievements</b>
+        <div class="row wrap gap-sm">
+          <span class="badge badge-warning">🏆 Top Rated 2025</span>
+          <span class="badge badge-accent">⚡ 50 on-time streak</span>
+          <span class="badge badge-secondary">🥇 #3 leaderboard KR</span>
+          <span class="badge badge-success">💯 100 five-star reviews</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="assets/sdmp.js"></script>
+</body>
+</html>
